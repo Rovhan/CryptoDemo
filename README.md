@@ -7,7 +7,7 @@ Als de applicatie draaiend is, kun je deze vinden van alle http requests op /act
 
 ## Design
 
-De applicatie is gemaakt naar de onion architecture. Hieronder benoem ik de lagen van binnen naar buiten.
+De applicatie is gemaakt naar het model van de Onion Architecture. Hieronder benoem ik de lagen van binnen naar buiten.
 
 #### Domain
 Hierin staan alle domeinobjecten. In dit geval alleen crypto. 
