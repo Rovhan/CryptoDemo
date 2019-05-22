@@ -4,7 +4,6 @@ import com.crypto.demo.domain.Crypto;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.websocket.OnError;
 import java.math.BigDecimal;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,6 +20,7 @@ public class CryptoBuilderTests {
     @Test
     public void CryptoBuildWithParametersShouldGiveAnObject(){
         var crypto = new Crypto.Builder().name("Test").numberOfCoins(1200042).marketCap(BigDecimal.valueOf(1232521234)).ticker("EDC").build();
+        assert crypto != null;
     }
 
     @Test

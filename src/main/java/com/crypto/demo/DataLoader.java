@@ -14,8 +14,8 @@ import java.util.Arrays;
 
 @Component
 public class DataLoader implements ApplicationRunner {
-    private CryptoRepository cryptoRepository;
-    private Logger logger = LoggerFactory.getLogger("demo");
+    private final CryptoRepository cryptoRepository;
+    private final Logger logger = LoggerFactory.getLogger("demo");
 
     @Autowired
     public DataLoader(CryptoRepository repository){
@@ -24,7 +24,7 @@ public class DataLoader implements ApplicationRunner {
 
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         var crypto1 = new Crypto.Builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
         var crypto2 = new Crypto.Builder().name("Ripple").marketCap(BigDecimal.valueOf(2212345)).ticker("RPL").numberOfCoins(22402L).build();
         var crypto3 = new Crypto.Builder().name("Gulden").marketCap(BigDecimal.valueOf(82232125)).ticker("GLD").numberOfCoins(32402L).build();

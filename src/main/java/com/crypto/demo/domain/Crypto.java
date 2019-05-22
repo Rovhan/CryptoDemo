@@ -1,8 +1,6 @@
 package com.crypto.demo.domain;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,20 +27,20 @@ public class Crypto {
         private static Crypto crypto = new Crypto();
 
         public Builder name(String name){
-            this.crypto.name = name;
+            crypto.name = name;
             return this;
         }
 
         public Builder ticker(String ticker){
-            this.crypto.ticker = ticker;
+            crypto.ticker = ticker;
             return this;
         }
         public Builder numberOfCoins(long numberOfCoins){
-            this.crypto.numberOfCoins = numberOfCoins;
+            crypto.numberOfCoins = numberOfCoins;
             return this;
         }
         public Builder marketCap(BigDecimal marketCap){
-            this.crypto.marketCap = marketCap;
+            crypto.marketCap = marketCap;
             return this;
         }
 

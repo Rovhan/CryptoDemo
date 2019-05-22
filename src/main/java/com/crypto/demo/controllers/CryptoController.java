@@ -9,28 +9,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.util.UriBuilder;
-import org.springframework.web.util.UriBuilderFactory;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.net.URI;
-import java.net.http.HttpResponse;
-import java.util.ArrayList;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/currencies")
 @CrossOrigin
 public class CryptoController {
-    private CryptoRepository cryptoRepository;
+    private final CryptoRepository cryptoRepository;
 
 
     @Autowired
@@ -63,8 +53,7 @@ public class CryptoController {
         try {
             var cryptoCreated = cryptoRepository.save(new Crypto.Builder().numberOfCoins(numberOfCoins).marketCap(marketcap).name(name).ticker(ticker).build());
             var uri = UriComponentsBuilder.fromUriString(request.getRequestURI()).path("/" + cryptoCreated.getId()).build().toUri();
-            var response = ResponseEntity.created(uri).build();
-            return response;
+            return ResponseEntity.created(uri).build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

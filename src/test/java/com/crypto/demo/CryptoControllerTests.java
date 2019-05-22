@@ -25,8 +25,7 @@ import java.util.Arrays;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = CryptoController.class)
@@ -49,9 +48,9 @@ public class CryptoControllerTests {
         Page<Crypto> cryptoPage = new PageImpl<>(cryptoList, PageRequest.of(0, 10, Sort.by("ticker").descending()), 10);
 
 
-        given(cryptoRepository.findAll()).willReturn(Arrays.asList(crypto1, crypto2, crypto3));
+        given(cryptoRepository.findAll()).willReturn(cryptoPage);
 
-        given(cryptoRepository.findAll(PageRequest.of(0, 10, Sort.by("ticker").descending()))).willReturn(cryptoPage);
+        given(cryptoRepository.findAll(PageRequest.of(0, 10, Sort.by("ticker").ascending()))).willReturn(cryptoPage);
         given(cryptoRepository.findById(1L)).willReturn(java.util.Optional.ofNullable(crypto2));
         given(cryptoRepository.findById(0L)).willReturn(java.util.Optional.ofNullable(crypto1));
         given(cryptoRepository.save(crypto1)).willReturn(crypto1);
@@ -93,10 +92,11 @@ public class CryptoControllerTests {
 
     @Test
     public void GetAllRequestShouldReturnOnePage() throws Exception {
-        var urlTemplate = controllerAddress;
-        mockMvc.perform(get(urlTemplate).accept(MediaType.APPLICATION_JSON_UTF8))
+        var expectedJSON = "{\"content\":[{\"id\":0,\"name\":\"Bitcoin\",\"ticker\":\"BTC\",\"numberOfCoins\":1323123,\"marketCap\":12848283},{\"id\":0,\"name\":\"Test1\",\"ticker\":\"BBB\",\"numberOfCoins\":22402,\"marketCap\":22125},{\"id\":0,\"name\":\"Test2\",\"ticker\":\"CCC\",\"numberOfCoins\":32402,\"marketCap\":22125},{\"id\":0,\"name\":\"Test2\",\"ticker\":\"AAA\",\"numberOfCoins\":32402,\"marketCap\":22125}],\"pageable\":{\"sort\":{\"sorted\":true,\"unsorted\":false,\"empty\":false},\"offset\":0,\"pageSize\":10,\"pageNumber\":0,\"unpaged\":false,\"paged\":true},\"totalElements\":10,\"totalPages\":1,\"last\":true,\"number\":0,\"size\":10,\"sort\":{\"sorted\":true,\"unsorted\":false,\"empty\":false},\"numberOfElements\":4,\"first\":true,\"empty\":false}\n";
+        mockMvc.perform(get(controllerAddress).accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(content().json(expectedJSON));
     }
 
 }
