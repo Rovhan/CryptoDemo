@@ -40,10 +40,10 @@ public class CryptoControllerTests {
 
     @Before
     public void SetUp(){
-        var crypto1 = new Crypto.Builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
-        var crypto2 = new Crypto.Builder().name("Test1").marketCap(BigDecimal.valueOf(22125)).ticker("BBB").numberOfCoins(22402L).build();
-        var crypto3 = new Crypto.Builder().name("Test2").marketCap(BigDecimal.valueOf(22125)).ticker("CCC").numberOfCoins(32402L).build();
-        var crypto4 = new Crypto.Builder().name("Test2").marketCap(BigDecimal.valueOf(22125)).ticker("AAA").numberOfCoins(32402L).build();
+        var crypto1 = Crypto.builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
+        var crypto2 = Crypto.builder().name("Test1").marketCap(BigDecimal.valueOf(22125)).ticker("BBB").numberOfCoins(22402L).build();
+        var crypto3 = Crypto.builder().name("Test2").marketCap(BigDecimal.valueOf(22125)).ticker("CCC").numberOfCoins(32402L).build();
+        var crypto4 = Crypto.builder().name("Test2").marketCap(BigDecimal.valueOf(22125)).ticker("AAA").numberOfCoins(32402L).build();
         var cryptoList = Arrays.asList(crypto1, crypto2, crypto3, crypto4);
         Page<Crypto> cryptoPage = new PageImpl<>(cryptoList, PageRequest.of(0, 10, Sort.by("ticker").descending()), 10);
 
@@ -66,8 +66,12 @@ public class CryptoControllerTests {
 
     @Test
     public void CreateRequestWithCorrectParametersShouldCreateANewCrypto() throws Exception{
-        var urlTemplate = "/api/currencies?name=Bitcoin&marketcap=12848283&numberOfCoins=1323123&ticker=BTC";
-        mockMvc.perform(post(urlTemplate).accept(MediaType.APPLICATION_JSON_UTF8))
+        var urlTemplate = "/api/currencies";
+        var cryptoToSent = Crypto.builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
+        var mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        var cryptoToSentJSON = mapper.writeValueAsString(cryptoToSent);
+        mockMvc.perform(post(urlTemplate).contentType(MediaType.APPLICATION_JSON_UTF8).content(cryptoToSentJSON))
                 .andExpect(status().isCreated());
 
     }

@@ -14,18 +14,18 @@ public class CryptoBuilderTests {
 
     @Test(expected = IllegalStateException.class)
     public void CryptoBuildWithNoParametersShouldGiveAnIllegalStateError(){
-        Crypto.Builder.build();
+        Crypto.builder().build();
     }
 
     @Test
     public void CryptoBuildWithParametersShouldGiveAnObject(){
-        var crypto = new Crypto.Builder().name("Test").numberOfCoins(1200042).marketCap(BigDecimal.valueOf(1232521234)).ticker("EDC").build();
+        var crypto = Crypto.builder().name("Test").numberOfCoins(1200042).marketCap(BigDecimal.valueOf(1232521234)).ticker("EDC").build();
         assert crypto != null;
     }
 
     @Test
     public void CryptoBuildWithParametersShouldGiveAnObjectWithTheSameParameters(){
-        var crypto = new Crypto.Builder().name("Test").numberOfCoins(1200042L).marketCap(BigDecimal.valueOf(1232521234)).ticker("EDC").build();
+        var crypto = Crypto.builder().name("Test").numberOfCoins(1200042L).marketCap(BigDecimal.valueOf(1232521234)).ticker("EDC").build();
         assertThat(crypto.getName(), is("Test"));
         assertThat(crypto.getNumberOfCoins(), is(1200042L));
         assertThat(crypto.getMarketCap(), is(BigDecimal.valueOf(1232521234)));

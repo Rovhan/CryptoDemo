@@ -25,11 +25,11 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        var crypto1 = new Crypto.Builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
-        var crypto2 = new Crypto.Builder().name("Ripple").marketCap(BigDecimal.valueOf(2212345)).ticker("RPL").numberOfCoins(22402L).build();
-        var crypto3 = new Crypto.Builder().name("Gulden").marketCap(BigDecimal.valueOf(82232125)).ticker("GLD").numberOfCoins(32402L).build();
-        var crypto4 = new Crypto.Builder().name("Etheruem").marketCap(BigDecimal.valueOf(42125)).ticker("ETH").numberOfCoins(32402L).build();
-        var crypto5 = new Crypto.Builder().name("Eos").marketCap(BigDecimal.valueOf(49555000)).ticker("EOS").numberOfCoins(100045L).build();
+        var crypto1 = Crypto.builder().name("Bitcoin").marketCap(BigDecimal.valueOf(12848283)).ticker("BTC").numberOfCoins(1323123).build();
+        var crypto2 = Crypto.builder().name("Ripple").marketCap(BigDecimal.valueOf(2212345)).ticker("RPL").numberOfCoins(22402L).build();
+        var crypto3 = Crypto.builder().name("Gulden").marketCap(BigDecimal.valueOf(82232125)).ticker("GLD").numberOfCoins(32402L).build();
+        var crypto4 = Crypto.builder().name("Etheruem").marketCap(BigDecimal.valueOf(42125)).ticker("ETH").numberOfCoins(32402L).build();
+        var crypto5 = Crypto.builder().name("Eos").marketCap(BigDecimal.valueOf(49555000)).ticker("EOS").numberOfCoins(100045L).build();
         var cryptoToSave = Arrays.asList(crypto1, crypto2, crypto3, crypto4,  crypto5);
         logger.info("Initial DB seed");
 

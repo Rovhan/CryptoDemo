@@ -47,11 +47,11 @@ public class CryptoController {
     }
 
     @PostMapping
-    public ResponseEntity createNewCrypto(@RequestParam(value = "name")String name, @RequestParam(value = "ticker") @Length(min = 3, max = 3) String ticker, @RequestParam(value = "marketcap")BigDecimal marketcap,
-                                          @RequestParam(value = "numberOfCoins")long numberOfCoins, HttpServletRequest request) {
+    public ResponseEntity createNewCrypto(@RequestBody CryptoDTO crypto, HttpServletRequest request) {
 
         try {
-            var cryptoCreated = cryptoRepository.save(new Crypto.Builder().numberOfCoins(numberOfCoins).marketCap(marketcap).name(name).ticker(ticker).build());
+            var cryptoToSave = Crypto.builder().marketCap(crypto.getMarketCap()).name(crypto.getName()).numberOfCoins(crypto.getNumberOfCoins()).ticker(crypto.getTicker()).build();
+            var cryptoCreated = cryptoRepository.save(cryptoToSave);
             var uri = UriComponentsBuilder.fromUriString(request.getRequestURI()).path("/" + cryptoCreated.getId()).build().toUri();
             return ResponseEntity.created(uri).build();
         } catch (Exception e) {

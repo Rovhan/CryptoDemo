@@ -22,37 +22,45 @@ public class Crypto {
 
     protected Crypto() {}
 
+    public static Builder builder() {
+        return new Builder();
+    }
 
     public static class Builder{
-        private static Crypto crypto = new Crypto();
+        private String name;
+        private String ticker;
+        private long numberOfCoins;
+        private BigDecimal marketCap;
+
+        private Builder() {}
 
         public Builder name(String name){
-            crypto.name = name;
+            this.name = name;
             return this;
         }
 
         public Builder ticker(String ticker){
-            crypto.ticker = ticker;
+            this.ticker = ticker;
             return this;
         }
         public Builder numberOfCoins(long numberOfCoins){
-            crypto.numberOfCoins = numberOfCoins;
+            this.numberOfCoins = numberOfCoins;
             return this;
         }
         public Builder marketCap(BigDecimal marketCap){
-            crypto.marketCap = marketCap;
+            this.marketCap = marketCap;
             return this;
         }
 
-        public static Crypto build() {
-            if(crypto.name == null || crypto.ticker == null || crypto.numberOfCoins == 0 || crypto.marketCap == null){
+        public Crypto build() {
+            if(this.name == null || this.ticker == null || this.numberOfCoins == 0 || this.marketCap == null){
                 throw new IllegalStateException("Object not properly build");
             }else{
                 var buildCrypto = new Crypto();
-                buildCrypto.numberOfCoins = crypto.numberOfCoins;
-                buildCrypto.marketCap = crypto.marketCap;
-                buildCrypto.name = crypto.name;
-                buildCrypto.ticker = crypto.ticker;
+                buildCrypto.numberOfCoins = this.numberOfCoins;
+                buildCrypto.marketCap = this.marketCap;
+                buildCrypto.name = this.name;
+                buildCrypto.ticker = this.ticker;
                 return buildCrypto;
             }
         }

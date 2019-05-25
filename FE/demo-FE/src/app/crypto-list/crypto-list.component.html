@@ -1,0 +1,74 @@
+<h2>Overzicht van crypto valuta </h2>
+<div class="cryptoForm">
+  <label>Valuta toevoegen</label>
+  <form>
+    <mat-form-field>
+      <input matInput [formControl]="formName" placeholder="Naam">
+      <mat-error *ngIf="formName.invalid">{{getErrorMessage(formName)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [formControl]="formTicker" placeholder="Ticker">
+      <mat-error *ngIf="formTicker.invalid">{{getErrorMessage(formTicker)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" [formControl]="formNumberOfCoins" placeholder="NumberOfCoins">
+      <mat-error *ngIf="formNumberOfCoins.invalid">{{getErrorMessage(formNumberOfCoins)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" [formControl]="formMarketCap" placeholder="MarketCap">
+      <mat-error *ngIf="formMarketCap.invalid">{{getErrorMessage(formMarketCap)}}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button (click)="addCrypto()">Opslaan</button>
+  </form>
+  <mat-table class="table" #table [dataSource]="dataSource" matSort>
+    <!-- ID Column-->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>
+        ID
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+    </ng-container>
+
+    <!-- Name Column-->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        Naam
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.name}}</mat-cell>
+    </ng-container>
+
+    <!-- Ticker Column-->
+    <ng-container matColumnDef="ticker">
+        <mat-header-cell *matHeaderCellDef>
+          Ticker
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.ticker}}</mat-cell>
+      </ng-container>
+
+    <!-- numberOfCoins Column-->
+    <ng-container matColumnDef="numberOfCoins">
+      <mat-header-cell *matHeaderCellDef>
+        Aantal munten
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.numberOfCoins}}</mat-cell>
+    </ng-container>
+    
+    <!-- marketCap Column-->
+    <ng-container matColumnDef="marketCap">
+      <mat-header-cell *matHeaderCellDef>
+        Totale marktwaarde
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{row.marketCap | currency:'EUR'}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef> <label>Acties</label> </mat-header-cell>
+        <mat-cell *matCellDef="let row"><button mat-icon-button (click)="remove(row)"><mat-icon>clear</mat-icon></button> </mat-cell>
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  
+</div>
